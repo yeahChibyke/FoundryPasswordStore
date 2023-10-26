@@ -1,4 +1,5 @@
 ![](my_logo.png)
+
 # High Risk Findings (3)
 
 - ## [`setPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) function does not verify if sender is owner of the contract
@@ -158,11 +159,11 @@
   
 - ### Impact
   
-    - Extra gas is used to retrieve `s_owner` from storage everytime this contract is called
+  - Extra gas is used to retrieve `s_owner` from storage everytime this contract is called
   
 - ### Recommended Mitigation
   
-    - The `s_owner` variable should be declared as `immutable`. This means that its value can only be set once during the contract's construction and cannot be changed afterwards. This saves gas because the contract doesn't need to store the owner's address in storage, it can just use the msg.sender value from the constructor
+  - The `s_owner` variable should be declared as `immutable`. This means that its value can only be set once during the contract's construction and cannot be changed afterwards. This saves gas because the contract doesn't need to store the owner's address in storage, it can just use the msg.sender value from the constructor
   
         ```javascript
         address private immutable s_owner;
@@ -174,11 +175,11 @@
   
 - ### Impact
   
-    - A check is done any time either of [`setPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) and [`getPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) functions are called, and these checks would use extra gas
+  - A check is done any time either of [`setPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) and [`getPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) functions are called, and these checks would use extra gas
   
 - ### Recommended Mitigation
   
-    - A `onlyOwner` modifier should be created and used to restrict access to the [`setPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) and [`getPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) functions. This modifier checks if the sender is the owner of the contract and throws an error if they are not. This saves gas because the check is done only once per function call, instead of being done in each function.
+  - A `onlyOwner` modifier should be created and used to restrict access to the [`setPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) and [`getPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) functions. This modifier checks if the sender is the owner of the contract and throws an error if they are not. This saves gas because the check is done only once per function call, instead of being done in each function.
   
         ```javascript
         // create modifier
