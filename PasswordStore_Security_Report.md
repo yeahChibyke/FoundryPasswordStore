@@ -1,3 +1,4 @@
+![](my_logo.png)
 # High Risk Findings (3)
 
 - ## [`setPassword()`](https://github.com/Cyfrin/2023-10-PasswordStore/blob/main/src/PasswordStore.sol) function does not verify if sender is owner of the contract
